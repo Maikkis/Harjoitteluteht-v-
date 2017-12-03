@@ -1,0 +1,29 @@
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Raaka-aineet</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Raaka-aineet</h1>
+
+        <ul>
+            <li th:each="aine : ${aineet}">
+                <span th:text="${aine.nimi}">Task</span>
+                
+            </li>
+        </ul>
+
+        <h2>Lisää uusi raaka-aine</h2>
+
+        <form method="POST" action="/aine">
+            <input type="text" name="nimi"/><br/>
+            <input type="submit" value="Lisää!"/>
+        </form>
+        
+         <a href="/annokset">Takaisin juomalistaukseen </a>
+    </body>
+</html>
