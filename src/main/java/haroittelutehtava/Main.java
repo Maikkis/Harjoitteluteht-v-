@@ -63,6 +63,7 @@ public class Main {
             return "";
         });
 
+        //luo uuden AnnosRaakaAineen
         Spark.post("/uusiannosraakaaine", (req, res) -> {
             int maara = Integer.parseInt(req.queryParams("maara"));
             int jarjestys = Integer.parseInt(req.queryParams("jarjestys"));
@@ -81,12 +82,27 @@ public class Main {
             return "";
         });
 
+        // luo uuden AnnosRaakaAineen
         Spark.get("/uusiannos", (req, res) -> {
-
             HashMap map = new HashMap<>();
             map.put("annokset", annokset.findAll());
             map.put("aineet", raakaAineet.findAll());
             return new ModelAndView(map, "annostenLisays");
+        }, new ThymeleafTemplateEngine());
+
+        Spark.post("/poista", (req, res) -> {
+            int id = Integer.parseInt(req.queryParams("id"));
+            System.out.println(id);
+            raakaAineet.delete(id);
+            annosRaakaAine.delete(id);
+            res.redirect("/aineet");
+            return "";
+        });
+
+        Spark.get("/*", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("annokset", annokset.findAll());
+            return new ModelAndView(map, "annokset");
         }, new ThymeleafTemplateEngine());
 
     }

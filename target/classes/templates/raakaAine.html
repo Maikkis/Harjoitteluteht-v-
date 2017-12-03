@@ -12,17 +12,22 @@
 
         <ul>
             <li th:each="aine : ${aineet}">
-                <span th:text="${aine.nimi}">Task</span>
-                
+                <span th:text="${aine.nimi}">Aine</span>
+                <form th:action="@{~/poista(id=${aine.id})}" method="post">
+                    <input type="submit" value="Poista!"/>
+                </form>
             </li>
         </ul>
-
+        
         <h2>Lisää uusi raaka-aine</h2>
 
         <form method="POST" action="/aine">
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää!"/>
         </form>
+        
+      
+        
         
          <a href="/annokset">Takaisin juomalistaukseen </a>
     </body>

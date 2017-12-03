@@ -27,7 +27,8 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
                 + "FROM AnnosRaakaAine "
                 + "LEFT JOIN RaakaAine "
                 + "ON AnnosRaakaAine.raakaAine_id = RaakaAine.id "
-                + "WHERE AnnosRaakaAine.annos_id = ?");
+                + "WHERE AnnosRaakaAine.annos_id = ? "
+                + "ORDER BY jarjestys ASC");
 
         stmt.setInt(1, key);
 
@@ -38,12 +39,11 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         }
         String tmp = "";
         List<String> lista = new ArrayList<>();
-        while (result.next()) {
+        do{
             tmp = result.getInt("jarjestys") + ".  " + result.getString("nimi")
                     + ",  " + result.getInt("maara") + "kpl,  " + result.getString("ohje");
             lista.add(tmp);
-
-        }
+        } while ((result.next()));
 
         stmt.close();
         result.close();
@@ -120,7 +120,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
 
     public void delete(Integer key) throws SQLException {
         Connection conn = db.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE annos_id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE raakaaine_id = ?");
 
         stmt.setInt(1, key);
         stmt.executeUpdate();
